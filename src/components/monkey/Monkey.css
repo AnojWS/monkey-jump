@@ -37,21 +37,21 @@
 
 /* Media Queries */
 @media (max-width: 1280px) {
-    .mario {
+    .monkey {
     width: 4rem;
     bottom: 100px;
     }
 }
 
 @media (max-width: 1024px) {
-    .mario {
+    .monkey {
         width: 3rem;
         bottom: 60px;
     }
 }
 
 @media (max-width: 640px) {
-    .mario {
+    .monkey {
         width: 2rem;
         left: 20px;
         bottom: 60px;

@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Login } from './components';
 import { useSelector } from "react-redux";
 import { Mario, LoadingScreen, Score, MobileControls, Footer } from "./components";
 import { KeyMessages, Bricks, Sun, Clouds, Birds, Obstacles } from './components/gameBackground'
@@ -12,8 +11,8 @@ function Home() {
             <div className="App">
                 {!isPlay && <KeyMessages />}
                 <Bricks />
-                <Mario />
                 <Sun />
+                <Mario />
                 <Clouds />
                 <Birds />
                 <Obstacles />

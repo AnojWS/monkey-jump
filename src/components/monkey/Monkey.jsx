@@ -6,13 +6,13 @@ import backgroundMusic from "../../assets/audio/running-about.mp3";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
-  marioJumping,
-  marioHeight,
-  marioLeft,
-  marioTop,
-  marioWidth,
-} from "../../../config/redux/marioSlice";
-import { setReady, setDie, setScore } from "../../../config/redux/engineSlice";
+  monkeyJumping,
+  monkeyHeight,
+  monkeyLeft,
+  monkeyTop,
+  monkeyWidth,
+} from "../../state/monkey/monkeySlice";
+import { setReady, setDie, setScore } from "../../state/engine/engineSlice";
 
 // die
 import dieAudio from "../../assets/audio/mario-died.mp3";
@@ -62,10 +62,10 @@ export const Mario = () => {
         dispatch(setReady(true));
       }
       if (mario_jump === false && e.code === "Space" && isPlay && !die && !loadingScreen) {
-        dispatch(marioJumping(true));
+        dispatch(monkeyJumping(true));
         jump.play();
         setTimeout(() => {
-          dispatch(marioJumping(false));
+          dispatch(monkeyJumping(false));
           jump.pause();
           jump.currentTime = 0;
         }, 400);
@@ -128,10 +128,10 @@ export const Mario = () => {
   // Monitor key press.
   useEffect(() => {
     document.addEventListener("keydown", handleKey);
-    dispatch(marioHeight(marioRef.current.getBoundingClientRect().height));
-    dispatch(marioLeft(marioRef.current.getBoundingClientRect().left));
-    dispatch(marioTop(marioRef.current.getBoundingClientRect().top));
-    dispatch(marioWidth(marioRef.current.getBoundingClientRect().width));
+    dispatch(monkeyHeight(marioRef.current.getBoundingClientRect().height));
+    dispatch(monkeyLeft(marioRef.current.getBoundingClientRect().left));
+    dispatch(monkeyTop(marioRef.current.getBoundingClientRect().top));
+    dispatch(monkeyWidth(marioRef.current.getBoundingClientRect().width));
 
     if (isPlay) {
       bgMusic.play();
@@ -142,12 +142,12 @@ export const Mario = () => {
   }, [handleKey, dispatch, bgMusic, isPlay]);
 
   return (
-    <div className="mario-container">
+    <div className="monkey-container">
       {!die && (
         <img
           src={MarioCharacter}
           alt=""
-          className={`mario ${mario_jump ? "jump" : ""}`}
+          className={`monkey ${mario_jump ? "jump" : ""}`}
           ref={marioRef}
         />
       )}
@@ -155,7 +155,7 @@ export const Mario = () => {
         <img
           src={MarioCharacter}
           alt=""
-          className={`mario ${die ? "die" : ""}`}
+          className={`monkey ${die ? "die" : ""}`}
           ref={marioRef}
         />
       )}
