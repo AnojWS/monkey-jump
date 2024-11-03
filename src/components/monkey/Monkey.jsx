@@ -1,5 +1,5 @@
 import "./Monkey.css";
-import MarioCharacter from "../../assets/img/gif/mario-run.gif";
+import MarioCharacter from "../../assets/img/gif/monkey.gif";
 import { useEffect, useRef, useCallback, useMemo } from "react";
 import jumpAudio from "../../assets/audio/mario-jump.mp3";
 import backgroundMusic from "../../assets/audio/running-about.mp3";
