@@ -27,11 +27,12 @@
 
 @keyframes die-animation {
     25% {
-        bottom: 30vh;
-        left: 8vh;
+        bottom: 18vh;
+        left: -2vh;
     }
     100% {
         bottom: -20vh;
+        left: -1vh;
     }
 }
 

@@ -1,5 +1,7 @@
 import "./Monkey.css";
-import MarioCharacter from "../../assets/img/gif/monkey.gif";
+import MonkeyCharacter from "../../assets/img/gif/monkey.gif";
+import MonkeyReady from "../../assets/img/monkey_ready.png"
+import MonkeyDie from "../../assets/img/monkey_die.png"
 import { useEffect, useRef, useCallback, useMemo } from "react";
 import jumpAudio from "../../assets/audio/mario-jump.mp3";
 import backgroundMusic from "../../assets/audio/running-about.mp3";
@@ -145,15 +147,15 @@ export const Mario = () => {
     <div className="monkey-container">
       {!die && (
         <img
-          src={MarioCharacter}
+          src={isPlay ? MonkeyCharacter : MonkeyReady}
           alt=""
-          className={`monkey ${mario_jump ? "jump" : ""}`}
+          className={`monkey ${mario_jump && isPlay ? "jump" : ""}`}
           ref={marioRef}
         />
       )}
       {die && (
         <img
-          src={MarioCharacter}
+          src={MonkeyDie}
           alt=""
           className={`monkey ${die ? "die" : ""}`}
           ref={marioRef}

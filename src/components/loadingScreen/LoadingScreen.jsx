@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MarioCharacter from "../../assets/img/mario.png";
+import MarioCharacter from "../../assets/img/monkey_ready.png";
 import "./LoadingScreen.css";
 import { setLoadingScreen } from "../../state/engine/engineSlice";
 import { useDispatch } from "react-redux";
