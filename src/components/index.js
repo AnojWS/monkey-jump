@@ -1,4 +1,4 @@
-export * from './login/Login';
+export * from './signin/signin';
 export * from './mobileControls/MobileControls';
 export * from './score/Score';
 export * from './title/Title';

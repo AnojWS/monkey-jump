@@ -1,10 +1,12 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import { useSelector, useDispatch } from "react-redux";
 import { Mario, LoadingScreen, Score, MobileControls, Footer, BananaGame } from "./components";
 import { KeyMessages, Bricks, Sun, Clouds, Birds, Obstacles } from './components/gameBackground'
 import { setPause, setReady } from './state/engine/engineSlice';
 import { useEffect } from 'react';
+import SignUp from './components/signup/signup';
+import Signin from './components/signin/signin';
 
 let count = 1;
 
@@ -13,12 +15,12 @@ function Home() {
     const isPlay = useSelector((state) => state.engine.play);
     const isPause = useSelector((state) => state.engine.pause);
     const score = useSelector(state => state.engine.score);
-    
+
 
     // Move state update logic to useEffect
     useEffect(() => {
         console.log(count);
-        if (score > 100*count) {
+        if (score > 100 * count) {
             count++;
             dispatch(setReady(false));
             dispatch(setPause(true));
@@ -30,9 +32,9 @@ function Home() {
 
     return (
         <>
-        {isPause && <BananaGame />}
+            {isPause && <BananaGame />}
             <div className="App">
-            
+
                 {!isPlay && (score === 0) && <KeyMessages />}
                 {!isPause && <Bricks />}
                 {!isPause && <Sun />}
@@ -41,23 +43,34 @@ function Home() {
                 {!isPause && <Birds />}
                 {!isPause && <Obstacles />}
                 <Score />
-                                
+
             </div>
             <MobileControls />
             <Footer />
-            
+
         </>
     );
 }
 
 
 function App() {
-  const isLoading = useSelector((state) => state.engine.loadingScreen);
+    const isLoading = useSelector((state) => state.engine.loadingScreen);
+    const { user } = useSelector((state) => state.auth)
     return (
         <BrowserRouter>
             {isLoading && <LoadingScreen />}
             <Routes>
-                <Route path="/" element={<Home />} />
+                {user ? (
+                    <>
+                        <Route path="/" element={<Home />} />
+                    </>
+                ) : (
+                    <>
+                        <Route path="/signin" element={<Signin />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="*" element={<Navigate to="/signin" />} />
+                    </>
+                )}
             </Routes>
         </BrowserRouter>
     );
