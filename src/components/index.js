@@ -5,3 +5,4 @@ export * from './title/Title';
 export * from './footer/Footer';
 export * from './loadingScreen/LoadingScreen';
 export * from './monkey/Monkey';
+export * from './bananaGame/BananaGame';

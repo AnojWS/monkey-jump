@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   play: false,
+  pause: false,
   die: false,
   speed: 0,
   score: 0,
@@ -15,6 +16,9 @@ export const engineSlice = createSlice({
   reducers: {
     setReady: (state, action) => {
       state.play = action.payload;
+    },
+    setPause: (state, action) => {
+      state.pause = action.payload;
     },
     setDie: (state, action) => {
       state.die = action.payload;
@@ -36,6 +40,7 @@ export const engineSlice = createSlice({
 
 export const {
   setReady,
+  setPause,
   setDie,
   setSpeed,
   setScore,

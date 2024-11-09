@@ -25,25 +25,31 @@ export const Obstacles = () => {
   const obstacle2Ref = useRef();
 
   useEffect(() => {
-    setInterval(() => {
-      
-      dispatch(obstacle1Height(obstacle1Ref.current.getBoundingClientRect().height));
-      dispatch(obstacle1Left(obstacle1Ref.current.getBoundingClientRect().left));
-      dispatch(obstacle1Top(obstacle1Ref.current.getBoundingClientRect().top));
-      dispatch(obstacle1Width(obstacle1Ref.current.getBoundingClientRect().width));
-
-      dispatch(obstacle2Height(obstacle2Ref.current.getBoundingClientRect().height));
-      dispatch(obstacle2Left(obstacle2Ref.current.getBoundingClientRect().left));
-      dispatch(obstacle2Top(obstacle2Ref.current.getBoundingClientRect().top));
-      dispatch(obstacle2Width(obstacle2Ref.current.getBoundingClientRect().width));
-      
+    const intervalId = setInterval(() => {
+      if (obstacle1Ref.current && obstacle2Ref.current) {
+        dispatch(obstacle1Height(obstacle1Ref.current.getBoundingClientRect().height));
+        dispatch(obstacle1Left(obstacle1Ref.current.getBoundingClientRect().left));
+        dispatch(obstacle1Top(obstacle1Ref.current.getBoundingClientRect().top));
+        dispatch(obstacle1Width(obstacle1Ref.current.getBoundingClientRect().width));
+  
+        dispatch(obstacle2Height(obstacle2Ref.current.getBoundingClientRect().height));
+        dispatch(obstacle2Left(obstacle2Ref.current.getBoundingClientRect().left));
+        dispatch(obstacle2Top(obstacle2Ref.current.getBoundingClientRect().top));
+        dispatch(obstacle2Width(obstacle2Ref.current.getBoundingClientRect().width));
+      }
     }, 100);
+  
+    // Cleanup function to clear the interval on component unmount
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [dispatch]);
+  
 
   useEffect(() => {
     if (speed >= 0) {
       setTimeout(() => {
-        dispatch(setSpeed(0.0001));
+        dispatch(setSpeed(0.00001));
       }, 1000);
     }
   }, [speed, dispatch]);
@@ -54,14 +60,14 @@ export const Obstacles = () => {
         src={obstacle1}
         alt=""
         className={isPlay ? "obstacle1 obstacle1-move" : "obstacle1"}
-        style={isPlay ? { animationDuration: `${6 - speed}s` } : { animationDuration: `3s` }}
+        style={isPlay ? { animationDuration: `${5 - speed}s` } : { animationDuration: `4s` }}
         ref={obstacle1Ref}
       />
       <img
         src={obstacle1}
         alt=""
         className={isPlay ? "obstacle2 obstacle2-move" : "obstacle2"}
-        style={isPlay ? { animationDuration: `${10 - speed}s` } : { animationDuration: `6s` }}
+        style={isPlay ? { animationDuration: `${8 - speed}s` } : { animationDuration: `7s` }}
         ref={obstacle2Ref}
       />
     </div>

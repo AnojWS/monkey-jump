@@ -17,7 +17,7 @@ export const MobileControls = () => {
 
   const handleStart = () => {
     if (!isPlay && !isDie) {
-      dispatch(setReady(!true));
+      dispatch(setReady(true));
     }
   };
   const handleJump = () => {
