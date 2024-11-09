@@ -143,7 +143,7 @@ export const Mario = () => {
     if (isPlay && !isPause && !bgMusicPlaying) {
       // Play bgMusic only if it's not already playing
       bgMusic.play().then(() => {
-        setBgMusicPlaying(true); // Set the flag to true once it starts
+        // setBgMusicPlaying(true); // Set the flag to true once it starts
       }).catch((error) => {
         if (error.name !== "AbortError") {
           console.error("Error playing audio:", error);

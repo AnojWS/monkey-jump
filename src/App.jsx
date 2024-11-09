@@ -41,7 +41,7 @@ function Home() {
                 {!isPause && <Birds />}
                 {!isPause && <Obstacles />}
                 <Score />
-                
+                                
             </div>
             <MobileControls />
             <Footer />
