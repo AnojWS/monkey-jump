@@ -39,7 +39,7 @@ function Home() {
                 {!isPause && <Mario />}
                 {!isPause && <Clouds />}
                 {!isPause && <Birds />}
-                {/* {!isPause && <Obstacles />} */}
+                {!isPause && <Obstacles />}
                 <Score />
                 
             </div>
