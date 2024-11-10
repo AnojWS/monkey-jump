@@ -15,11 +15,11 @@
 }
 
 .obstacle1 {
-    left: 10vw;
+    left: 100vw;
     
 }
 .obstacle2 {
-    left: 240vw;
+    left: 200vw;
     
 }
 
@@ -39,19 +39,19 @@
 
 @keyframes obstacle1-animation {
     0% {
-        left: 125vw;
+        left: 105vw;
     }
     100% {
-        left: -120vw;
+        left: -100vw;
     }
 }
 
 @keyframes obstacle2-animation {
     0% {
-        left: 240vw;
+        left: 200vw;
     }
     100% {
-        left: -240vw;
+        left: -200vw;
     }
 }
 
