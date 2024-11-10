@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Signinbg from "../../assets/img/sign_up.png";
+import Signinbg from '../../assets/img/sign_up.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../state/auth/authSlice';
+import toast from 'react-hot-toast';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ const Signin = () => {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {error, loading} = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
   const validateForm = () => {
     const newErrors = {};
@@ -34,10 +35,13 @@ const Signin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      dispatch(login({ email, password }))
-      .unwrap()
-      .then(() => navigate('/home'))
-      .catch((err) => console.error(err));
+      toast
+        .promise(dispatch(login({ email, password })).unwrap(), {
+          loading: loading,
+          success: <b>Successfully Signin!</b>,
+          error: error,
+        })
+        .then(() => navigate('/'));
     }
   };
 
@@ -97,7 +101,7 @@ const Signin = () => {
             </button>
           </form>
 
-          <Link to={"/signup"} className="text-[#f0da8a] text-md font-bold">
+          <Link to={'/signup'} className="text-[#f0da8a] text-md font-bold">
             No Account? Create Account
           </Link>
         </div>

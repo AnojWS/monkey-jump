@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './BananaGame.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setScore, setReady, setPause} from '../../state/engine/engineSlice';
+import toast from 'react-hot-toast';
 
 export const BananaGame = () => {
   const score = useSelector(state => state.engine.score);
@@ -33,20 +34,29 @@ export const BananaGame = () => {
   const handleCheck = () => {
     console.log(answer);
     console.log(data.solution);
+  
     if (data.solution == answer) {
-      console.log("correct");
-      dispatch(setScore(score+10));
-      dispatch(setReady(true));
-      dispatch(setPause(false));
+      // Show a toast immediately to inform the user the answer is correct
+      toast.success('Answer is correct!');
+  
+      // Add a 2-second delay before dispatching the actions
+      setTimeout(() => {
+        console.log("correct");
+        dispatch(setScore(score + 10));
+        dispatch(setReady(true));
+        dispatch(setPause(false));
+      }, 2000);
+    } else {
+      toast.error('Answer is incorrect!');
     }
-    // You can also use the inputValue for other logic here
   };
 
   return (
-    <div className="banana-game bg-white">
+    <div className="banana-game bg-neutral-300  py-[8rem]">
       {data && <img className="banana-game-image" src={data.question} alt="" />}
       <h2>Enter the number should be at Banana</h2>
       <input
+        className=' border-black border-2'
         autoFocus
         type="number"
         min="0"

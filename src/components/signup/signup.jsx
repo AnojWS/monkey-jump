@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import Signupbg from "../../assets/img/sign_up.png";
+import Signupbg from '../../assets/img/sign_up.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { signup } from '../../state/auth/authSlice';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,11 +34,14 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()){
-      dispatch(signup({ email, password }))
-      .unwrap()
-      .then(() => navigate('/signin'))
-      .catch((err) => console.error(err));
+    if (validateForm()) {
+      toast
+        .promise(dispatch(signup({ email, password })).unwrap(), {
+          loading: loading,
+          success: <b>Successfully Signup!</b>,
+          error: error,
+        })
+        .then(() => navigate('/'));
     }
   };
 
@@ -65,7 +69,7 @@ const SignUp = () => {
               )}
             </div>
             <div className="mb-8 w-full opacity-75 relative">
-            <input
+              <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter Password"
                 className="w-full px-4 py-3 border rounded focus:outline-none focus:border-black"

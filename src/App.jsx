@@ -24,6 +24,7 @@ import Signin from './components/signin/signin';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { setUser } from './state/auth/authSlice';
+import Header from './components/header/header';
 
 let count = 1;
 
@@ -49,6 +50,7 @@ function Home() {
     <>
       {isLoading && <LoadingScreen />}
       {isPause && <BananaGame />}
+      {<Header/>}
       <div className="App">
         {!isPlay && score === 0 && <KeyMessages />}
         {!isPause && <Bricks />}
