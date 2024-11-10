@@ -1,8 +1,22 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
-import { useSelector, useDispatch } from "react-redux";
-import { Mario, LoadingScreen, Score, MobileControls, Footer, BananaGame } from "./components";
-import { KeyMessages, Bricks, Sun, Clouds, Birds, Obstacles } from './components/gameBackground'
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  Mario,
+  LoadingScreen,
+  Score,
+  MobileControls,
+  Footer,
+  BananaGame,
+} from './components';
+import {
+  KeyMessages,
+  Bricks,
+  Sun,
+  Clouds,
+  Birds,
+  Obstacles,
+} from './components/gameBackground';
 import { setPause, setReady } from './state/engine/engineSlice';
 import { useEffect } from 'react';
 import SignUp from './components/signup/signup';
@@ -11,69 +25,55 @@ import Signin from './components/signin/signin';
 let count = 1;
 
 function Home() {
-    const dispatch = useDispatch();
-    const isPlay = useSelector((state) => state.engine.play);
-    const isPause = useSelector((state) => state.engine.pause);
-    const score = useSelector(state => state.engine.score);
+  const dispatch = useDispatch();
+  const isPlay = useSelector((state) => state.engine.play);
+  const isPause = useSelector((state) => state.engine.pause);
+  const score = useSelector((state) => state.engine.score);
 
+  // Move state update logic to useEffect
+  useEffect(() => {
+    console.log(count);
+    if (score > 100 * count) {
+      count++;
+      dispatch(setReady(false));
+      dispatch(setPause(true));
+    }
+  }, [score, dispatch]); // Dependencies to trigger the effect when score changes
 
-    // Move state update logic to useEffect
-    useEffect(() => {
-        console.log(count);
-        if (score > 100 * count) {
-            count++;
-            dispatch(setReady(false));
-            dispatch(setPause(true));
-
-        }
-
-    }, [score, dispatch]); // Dependencies to trigger the effect when score changes
-
-
-    return (
-        <>
-            {isPause && <BananaGame />}
-            <div className="App">
-
-                {!isPlay && (score === 0) && <KeyMessages />}
-                {!isPause && <Bricks />}
-                {!isPause && <Sun />}
-                {!isPause && <Mario />}
-                {!isPause && <Clouds />}
-                {!isPause && <Birds />}
-                {!isPause && <Obstacles />}
-                <Score />
-
-            </div>
-            <MobileControls />
-            <Footer />
-
-        </>
-    );
+  return (
+    <>
+      {isPause && <BananaGame />}
+      <div className="App">
+        {!isPlay && score === 0 && <KeyMessages />}
+        {!isPause && <Bricks />}
+        {!isPause && <Sun />}
+        {!isPause && <Mario />}
+        {!isPause && <Clouds />}
+        {!isPause && <Birds />}
+        {!isPause && <Obstacles />}
+        <Score />
+      </div>
+      <MobileControls />
+      <Footer />
+    </>
+  );
 }
 
-
 function App() {
-    const isLoading = useSelector((state) => state.engine.loadingScreen);
-    const { user } = useSelector((state) => state.auth)
-    return (
-        <BrowserRouter>
-            {isLoading && <LoadingScreen />}
-            <Routes>
-                {user ? (
-                    <>
-                        <Route path="/" element={<Home />} />
-                    </>
-                ) : (
-                    <>
-                        <Route path="/signin" element={<Signin />} />
-                        <Route path="/signup" element={<SignUp />} />
-                        <Route path="*" element={<Navigate to="/signin" />} />
-                    </>
-                )}
-            </Routes>
-        </BrowserRouter>
-    );
+  const isLoading = useSelector((state) => state.engine.loadingScreen);
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
+  return (
+    <BrowserRouter>
+      {isLoading && <LoadingScreen />}
+      <Routes>
+        <Route path="/home" element={user != null && <Home />} />
+        <Route path="/" element={<Signin />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="*" element={<Navigate to="/signin" />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

@@ -36,7 +36,7 @@ const Signin = () => {
     if (validateForm()) {
       dispatch(login({ email, password }))
       .unwrap()
-      .then(() => navigate('/'))
+      .then(() => navigate('/home'))
       .catch((err) => console.error(err));
     }
   };
