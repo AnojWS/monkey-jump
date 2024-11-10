@@ -18,7 +18,7 @@ import {
   Obstacles,
 } from './components/gameBackground';
 import { setPause, setReady } from './state/engine/engineSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SignUp from './components/signup/signup';
 import Signin from './components/signin/signin';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -69,32 +69,41 @@ function App() {
 
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   //   console.log(user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        dispatch(setUser({
-          uid: currentUser.uid,
-          email: currentUser.email,
-          displayName: currentUser.displayName,
-          photoURL: currentUser.photoURL,
-        }));
+        dispatch(setUser(
+          {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          }
+        ));
       } else {
         // If no user is logged in, clear the state
         dispatch(setUser(null));
       }
+      setLoading(false);
     });
     // Cleanup subscription on component unmount
     return () => unsubscribe();
   }, [dispatch]);
- 
-  console.log(user)
+
+  if (loading) {
+    // Show a loading indicator while checking auth state
+    return <div>Loading...</div>;
+  }
+
+  console.log(user != null ? true : false);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/home" element={user != null ? <Home /> : <Navigate to="/" />} />
-        <Route path="/" element={<Signin />} />
+        <Route path="/" element={(user != null) ? <Home /> : <Signin />} />
+        {/* <Route path="/signin" element={<Signin />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>
