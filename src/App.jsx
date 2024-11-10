@@ -21,6 +21,9 @@ import { setPause, setReady } from './state/engine/engineSlice';
 import { useEffect } from 'react';
 import SignUp from './components/signup/signup';
 import Signin from './components/signin/signin';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
+import { setUser } from './state/auth/authSlice';
 
 let count = 1;
 
@@ -44,7 +47,7 @@ function Home() {
 
   return (
     <>
-        {isLoading && <LoadingScreen />}
+      {isLoading && <LoadingScreen />}
       {isPause && <BananaGame />}
       <div className="App">
         {!isPlay && score === 0 && <KeyMessages />}
@@ -63,12 +66,32 @@ function Home() {
 }
 
 function App() {
-  
+
   const { user } = useSelector((state) => state.auth);
-//   console.log(user);
+  const dispatch = useDispatch();
+  //   console.log(user);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        dispatch(setUser({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        }));
+      } else {
+        // If no user is logged in, clear the state
+        dispatch(setUser(null));
+      }
+    });
+    // Cleanup subscription on component unmount
+    return () => unsubscribe();
+  }, [dispatch]);
+ 
+  console.log(user)
   return (
     <BrowserRouter>
-      
       <Routes>
         <Route path="/home" element={user != null ? <Home /> : <Navigate to="/" />} />
         <Route path="/" element={<Signin />} />

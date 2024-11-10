@@ -10,43 +10,36 @@ const initialState = {
 };
 
 // Thunk for signing in
-export const login = createAsyncThunk(
-  "auth/signin",
-  async ({ email, password }, { rejectWithValue }) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log(user);
-      return {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-      };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+export const login = createAsyncThunk("auth/signin", async ({ email, password }, { rejectWithValue }) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    return {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+    };
+  } catch (error) {
+    return rejectWithValue(error.message);
   }
-);
+});
 
 // Thunk for signing up
-export const signup = createAsyncThunk(
-  "auth/signup",
-  async ({ email, password }, { rejectWithValue }) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      return {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-      };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+export const signup = createAsyncThunk("auth/signup", async ({ email, password }, { rejectWithValue }) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    return {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+    };
+  } catch (error) {
+    return rejectWithValue(error.message);
   }
-);
+});
 
 // Thunk for signing out
 export const logout = createAsyncThunk("auth/logout", async () => {
@@ -56,7 +49,11 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Login cases
@@ -94,4 +91,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { setUser } = authSlice.actions;
 export default authSlice.reducer;
