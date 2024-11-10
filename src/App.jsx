@@ -29,6 +29,8 @@ function Home() {
   const isPlay = useSelector((state) => state.engine.play);
   const isPause = useSelector((state) => state.engine.pause);
   const score = useSelector((state) => state.engine.score);
+  
+  const isLoading = useSelector((state) => state.engine.loadingScreen);
 
   // Move state update logic to useEffect
   useEffect(() => {
@@ -42,6 +44,7 @@ function Home() {
 
   return (
     <>
+        {isLoading && <LoadingScreen />}
       {isPause && <BananaGame />}
       <div className="App">
         {!isPlay && score === 0 && <KeyMessages />}
@@ -60,12 +63,12 @@ function Home() {
 }
 
 function App() {
-  const isLoading = useSelector((state) => state.engine.loadingScreen);
+  
   const { user } = useSelector((state) => state.auth);
   console.log(user);
   return (
     <BrowserRouter>
-      {isLoading && <LoadingScreen />}
+      
       <Routes>
         <Route path="/home" element={user != null && <Home />} />
         <Route path="/" element={<Signin />} />
