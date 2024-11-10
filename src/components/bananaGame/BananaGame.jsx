@@ -43,7 +43,7 @@ export const BananaGame = () => {
   };
 
   return (
-    <div className="banana-game">
+    <div className="banana-game bg-white">
       {data && <img className="banana-game-image" src={data.question} alt="" />}
       <h2>Enter the number should be at Banana</h2>
       <input

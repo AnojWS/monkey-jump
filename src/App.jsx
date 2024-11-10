@@ -29,7 +29,7 @@ function Home() {
   const isPlay = useSelector((state) => state.engine.play);
   const isPause = useSelector((state) => state.engine.pause);
   const score = useSelector((state) => state.engine.score);
-  
+
   const isLoading = useSelector((state) => state.engine.loadingScreen);
 
   // Move state update logic to useEffect
@@ -65,12 +65,12 @@ function Home() {
 function App() {
   
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+//   console.log(user);
   return (
     <BrowserRouter>
       
       <Routes>
-        <Route path="/home" element={user != null && <Home />} />
+        <Route path="/home" element={user != null ? <Home /> : <Navigate to="/" />} />
         <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/signin" />} />
