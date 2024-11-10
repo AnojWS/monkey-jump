@@ -42,8 +42,9 @@ export const signup = createAsyncThunk("auth/signup", async ({ email, password }
 });
 
 // Thunk for signing out
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
   await signOut(auth);
+  dispatch(setUser(null)); // Clear user data in the Redux state
 });
 
 const authSlice = createSlice({
