@@ -11,7 +11,7 @@ const initialState = {
 
 // Thunk for signing in
 export const login = createAsyncThunk(
-  "auth/login",
+  "auth/signin",
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);

@@ -33,7 +33,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateForm()){
       dispatch(signup({ email, password }))
       .unwrap()
       .then(() => navigate('/signin'))
