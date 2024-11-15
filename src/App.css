@@ -17,7 +17,7 @@
 }
 
 /* Media Queries */
-@media (max-width: 1280px) {
+/* @media (max-width: 1280px) {
   .App {
     width: 95%;
     border: 0.2rem solid #EEE;
@@ -29,4 +29,4 @@
     height: 50vh;
     top: 40%;
   }
-}
+} */

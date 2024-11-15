@@ -16,10 +16,10 @@ export const LoadingScreen = () => {
   return (
     <div className="loading-screen-container ">
       
-      {!isReady && <h1 className="loading-title shadow-2xl mt-[50rem]">Loading...</h1>}
+      {!isReady && <h1 className="loading-title shadow-2xl mt-[35rem] ">Loading...</h1>}
       {isReady && (
         <button
-          className="enter-button shadow-2xl mt-[50rem]"
+          className="enter-button shadow-2xl mt-[35rem]"
           onClick={() => dispatch(setLoadingScreen(false))}
         >
           ENTER

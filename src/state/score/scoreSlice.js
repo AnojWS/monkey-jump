@@ -7,6 +7,7 @@ export const fetchTopScores = createAsyncThunk("scores/fetchTopScores", async ()
 });
 
 export const saveScore = createAsyncThunk("scores/saveScore", async ({ userId, email, score }) => {
+  console.log("score from slice: ", score);
   await saveUserScore(userId, email, score);
   return { userId, score };
 });

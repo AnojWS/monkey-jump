@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Signinbg from '../../assets/img/sign_up.png';
+import Signinbg from '../../assets/img/sign_in.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
@@ -101,7 +101,7 @@ const Signin = () => {
             </button>
           </form>
 
-          <Link to={'/signup'} className="text-[#f0da8a] text-md font-bold">
+          <Link to={'/signup'} className="text-[#f6f5f1] text-xl font-bold align-baseline">
             No Account? Create Account
           </Link>
         </div>

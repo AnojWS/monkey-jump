@@ -37,7 +37,7 @@
 }
 
 /* Media Queries */
-@media (max-width: 1280px) {
+/* @media (max-width: 1280px) {
     .monkey {
     width: 4rem;
     bottom: 100px;
@@ -57,4 +57,4 @@
         left: 20px;
         bottom: 60px;
     }
-}
+} */

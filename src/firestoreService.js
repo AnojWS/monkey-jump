@@ -6,7 +6,7 @@ import { db } from "./firebase";
 export const saveUserScore = async (userId, email, score) => {
   const userScoreRef = doc(db, "scores", userId);
   const userScoreDoc = await getDoc(userScoreRef);
-
+  console.log("come Hear");
   if (userScoreDoc.exists()) {
     // If user score exists, update it if the new score is higher
     const existingScore = userScoreDoc.data().score;

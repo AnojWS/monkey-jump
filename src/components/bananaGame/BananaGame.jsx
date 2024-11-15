@@ -45,8 +45,8 @@ export const BananaGame = () => {
         dispatch(setScore(score + 10));
         dispatch(setReady(true));
         dispatch(setPause(false));
-        navigate("/");
-      }, 2000);
+        // navigate("/");
+      }, 500);
     } else {
       toast.error('Answer is incorrect!');
     }
@@ -54,9 +54,9 @@ export const BananaGame = () => {
   };
 
   return (
-    <div className="banana-game pb-36  bg-neutral-300 ">
-      {data && <img className="banana-game-image mx-auto mt-36" src={data.question} alt="" />}
-      <div className=' flex flex-row justify-center'>
+    <div className="banana-game pb-36  bg-neutral-300">
+      {data && <img className="banana-game-image mx-auto mt-36 z-50" src={data.question} alt="" />}
+      <div className=' flex flex-row justify-center z-50'>
         <h2 className='font-bold text-black text-3xl'>Enter the number should be at Banana</h2>
         <input
           className=" ms-5 border-black border-2"
@@ -67,7 +67,7 @@ export const BananaGame = () => {
           onChange={handleInputChange}
         />
       </div>
-      <button onClick={handleCheck}>check</button>
+      <button className=' z-50' onClick={handleCheck}>check</button>
     </div>
   );
 };

@@ -26,6 +26,7 @@ import { auth } from './firebase';
 import { setUser } from './state/auth/authSlice';
 import Header from './components/header/header';
 import backgroundMusic from "./assets/audio/bgMusic.mp3";
+import Leaderboard from './components/leaderBoard/leaderboard';
 
 let count = 1;
 
@@ -54,30 +55,29 @@ function Home() {
       count++;
       dispatch(setReady(false));
       dispatch(setPause(true));
-      navigate("/banana-game")
+      // navigate("/banana-game")
     }
 
-    
-    bgMusic.play()  
-    
-    
-      
 
-  }, [score, dispatch, bgMusic ]); // Dependencies to trigger the effect when score changes
+    // bgMusic.play()  
+
+
+
+
+  }, [score, dispatch, bgMusic]); // Dependencies to trigger the effect when score changes
 
   return (
     <>
       {isLoading && <LoadingScreen />}
-      
-           
-      <div className="App">
+      {isPause && <BananaGame />}
+      <div className={!isPause ? "App" : ""}>
         {!isPlay && score === 0 && <KeyMessages />}
         {!isPause && <Bricks />}
         {!isPause && <Sun />}
-        {!isPause && <Mario />}
+        {<Mario />}
         {!isPause && <Clouds />}
         {!isPause && <Birds />}
-        {!isPause && <Obstacles />}
+        {<Obstacles />}
         <Score />
       </div>
       <MobileControls />
@@ -122,12 +122,13 @@ function App() {
   console.log(user != null ? true : false);
   return (
     <BrowserRouter>
-    {(user != null) && <Header/>}
+      {(user != null) && <Header />}
       <Routes>
         <Route path="/" element={(user != null) ? <Home /> : <Signin />} />
         {/* <Route path="/signin" element={<Signin />} /> */}
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/banana-game" element={<BananaGame />} />
+        {/* <Route path="/banana-game" element={<BananaGame />} /> */}
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>
     </BrowserRouter>

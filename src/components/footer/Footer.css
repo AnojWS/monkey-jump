@@ -5,10 +5,13 @@
     margin: auto;
     position: fixed;
     bottom: 20px;
-    color: #EEE;
+    color: #100404;
+    font-weight: bold;
     z-index: 100;
 }
 
 .copyright-link {
-    color: #fb5c00;
+    color: #e20d0d;
+    font-weight: bold;
+    font-size: 16px;
 }

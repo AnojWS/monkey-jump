@@ -14,6 +14,7 @@ import {
   monkeyWidth,
 } from "../../state/monkey/monkeySlice";
 import { setReady, setDie, setScore } from "../../state/engine/engineSlice";
+import { saveScore } from "../../state/score/scoreSlice"
 
 
 import dieAudio from "../../assets/audio/mario-died.mp3";
@@ -43,6 +44,12 @@ export const Mario = () => {
   const obs2_top = useSelector((state) => state.obstacle.obs2Top);
   const obs2_width = useSelector((state) => state.obstacle.obs2Width);
 
+  const isPause = useSelector((state) => state.engine.pause);
+
+  const score = useSelector(state => state.engine.score);
+
+  const { user } = useSelector((state) => state.auth);
+
   // Jump audio
   const jump = useMemo(() => {
     return new Audio(jumpAudio);
@@ -59,7 +66,7 @@ export const Mario = () => {
       if (e.code === "Enter" && !isPlay && !die && !loadingScreen) {
         dispatch(setReady(true));
       }
-      
+
       if (mario_jump === false && e.code === "Space" && isPlay && !die && !loadingScreen) {
         // dispatch(setReady(false));
         dispatch(monkeyJumping(true));
@@ -82,7 +89,8 @@ export const Mario = () => {
       mario_top + mario_height > obs1_top
     ) {
       dispatch(setDie(true));
-      
+      console.log(" I have died ", die);
+      dispatch(saveScore({ userId: user.uid, email: user.email, score }));
       marioDie.play();
       dispatch(setReady(false));
       setTimeout(() => {
@@ -132,7 +140,7 @@ export const Mario = () => {
     dispatch(monkeyLeft(marioRef.current.getBoundingClientRect().left));
     dispatch(monkeyTop(marioRef.current.getBoundingClientRect().top));
     dispatch(monkeyWidth(marioRef.current.getBoundingClientRect().width));
-  
+
     // if (isPlay && !isPause && !bgMusicPlaying) {
     //   // Play bgMusic only if it's not already playing
     //   bgMusic.play().then(() => {
@@ -149,9 +157,9 @@ export const Mario = () => {
     //     setBgMusicPlaying(false); // Reset the flag
     //   }
     // }
-  
+
     // Cleanup function to pause the music when the component unmounts
-    
+
   }, [handleKey, dispatch]);
 
   return (
@@ -160,7 +168,7 @@ export const Mario = () => {
         <img
           src={isPlay ? MonkeyCharacter : MonkeyReady}
           alt=""
-          className={`monkey ${mario_jump && isPlay ? "jump" : ""}`}
+          className={`monkey ${mario_jump && isPlay ? "jump" : isPause ? "hidden" : "block"}`}
           ref={marioRef}
         />
       )}
