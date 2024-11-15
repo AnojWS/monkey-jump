@@ -6,11 +6,15 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: #2D2D2D;
+    background-color: #ffffff;
+    background-image: url("/src/assets/img/loadBg.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     color: #EEE;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     gap: 2rem;
     z-index: 10;

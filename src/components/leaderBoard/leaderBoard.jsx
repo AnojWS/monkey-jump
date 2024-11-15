@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTopScores } from "../../state/score/scoreSlice";
 import mainBackgroundImage from "../../assets/img/sign_up.png";

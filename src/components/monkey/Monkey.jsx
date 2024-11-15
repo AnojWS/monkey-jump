@@ -2,9 +2,8 @@ import "./Monkey.css";
 import MonkeyCharacter from "../../assets/img/gif/monkey.gif";
 import MonkeyReady from "../../assets/img/monkey_ready.png"
 import MonkeyDie from "../../assets/img/monkey_die.png"
-import { useEffect, useRef, useCallback, useMemo, useState } from "react";
+import { useEffect, useRef, useCallback, useMemo } from "react";
 import jumpAudio from "../../assets/audio/mario-jump.mp3";
-import backgroundMusic from "../../assets/audio/running-about.mp3";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,7 +25,7 @@ export const Mario = () => {
   const loadingScreen = useSelector((state) => state.engine.loadingScreen);
 
   const isPlay = useSelector((state) => state.engine.play);
-  const isPause = useSelector((state) => state.engine.pause);
+  // const isPause = useSelector((state) => state.engine.pause);
   // Mario positions & jump
   const mario_jump = useSelector((state) => state.mario.jumping);
   const mario_height = useSelector((state) => state.mario.height);
@@ -52,10 +51,6 @@ export const Mario = () => {
   // Die
   const marioDie = useMemo(() => {
     return new Audio(dieAudio);
-  }, []);
-
-  const bgMusic = useMemo(() => {
-    return new Audio(backgroundMusic);
   }, []);
 
   // Handling key press event.
@@ -130,9 +125,6 @@ export const Mario = () => {
     obs2_height,
   ]);
 
-  // Monitor key press.
-  const [bgMusicPlaying, setBgMusicPlaying] = useState(false);
-
   useEffect(() => {
     document.addEventListener("keydown", handleKey);
     dispatch(monkeyHeight(marioRef.current.getBoundingClientRect().height));
@@ -140,30 +132,26 @@ export const Mario = () => {
     dispatch(monkeyTop(marioRef.current.getBoundingClientRect().top));
     dispatch(monkeyWidth(marioRef.current.getBoundingClientRect().width));
   
-    if (isPlay && !isPause && !bgMusicPlaying) {
-      // Play bgMusic only if it's not already playing
-      bgMusic.play().then(() => {
-        // setBgMusicPlaying(true); // Set the flag to true once it starts
-      }).catch((error) => {
-        if (error.name !== "AbortError") {
-          console.error("Error playing audio:", error);
-        }
-      });
-    } else if (!isPlay || isPause) {
-      if (bgMusicPlaying) {
-        bgMusic.pause();
-        bgMusic.currentTime = 0; // Reset only when stopping
-        setBgMusicPlaying(false); // Reset the flag
-      }
-    }
+    // if (isPlay && !isPause && !bgMusicPlaying) {
+    //   // Play bgMusic only if it's not already playing
+    //   bgMusic.play().then(() => {
+    //     // setBgMusicPlaying(true); // Set the flag to true once it starts
+    //   }).catch((error) => {
+    //     if (error.name !== "AbortError") {
+    //       console.error("Error playing audio:", error);
+    //     }
+    //   });
+    // } else if (!isPlay || isPause) {
+    //   if (bgMusicPlaying) {
+    //     bgMusic.pause();
+    //     bgMusic.currentTime = 0; // Reset only when stopping
+    //     setBgMusicPlaying(false); // Reset the flag
+    //   }
+    // }
   
     // Cleanup function to pause the music when the component unmounts
-    return () => {
-      bgMusic.pause();
-      bgMusic.currentTime = 0;
-      setBgMusicPlaying(false);
-    };
-  }, [handleKey, dispatch, bgMusic, isPlay, isPause, bgMusicPlaying]);
+    
+  }, [handleKey, dispatch]);
 
   return (
     <div className="monkey-container">

@@ -22,8 +22,8 @@ export const Score = () => {
   }, [dispatch, play, score, lastScore, die]);
   return (
     <div className="score-container">
-      {play && <p className="score">Score: {score}</p>}
-      {!play && <p className="score">Score: {lastScore}</p>}
+      {play && <p className="score text-black">Score: {score}</p>}
+      {!play && <p className="score text-black">Score: {lastScore}</p>}
     </div>
   )
 }

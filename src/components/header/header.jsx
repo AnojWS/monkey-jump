@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between items-center bg-gray-800 text-white p-4">
+    <div className="fixed w-full top-0 flex flex-row justify-between items-center bg-gray-800 text-white p-4 z-50">
       <div className='bg-[#F8C00B] py-1.5 px-4 border-2 rounded-md text-black'>
         {user?.email ? (
           <span>Welcome, {userName}!</span>

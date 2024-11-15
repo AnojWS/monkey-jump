@@ -19,6 +19,7 @@ export const Bricks = () => {
   //     return () => window.removeEventListener('load', setLoad);
   //   }
   // }, []);
+
   return (
     <div className="bricks-container">
       <div className={isPlay ? 'brick brick-animate' : 'brick'} />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import MarioCharacter from "../../assets/img/monkey_ready.png";
 import "./LoadingScreen.css";
 import { setLoadingScreen } from "../../state/engine/engineSlice";
 import { useDispatch } from "react-redux";
@@ -15,12 +14,12 @@ export const LoadingScreen = () => {
   }, []);
 
   return (
-    <div className="loading-screen-container">
-      <img src={MarioCharacter} alt="" className="loading-mario" />
-      {!isReady && <h1 className="loading-title">Loading...</h1>}
+    <div className="loading-screen-container ">
+      
+      {!isReady && <h1 className="loading-title shadow-2xl mt-[50rem]">Loading...</h1>}
       {isReady && (
         <button
-          className="enter-button"
+          className="enter-button shadow-2xl mt-[50rem]"
           onClick={() => dispatch(setLoadingScreen(false))}
         >
           ENTER

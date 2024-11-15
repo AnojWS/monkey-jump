@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -18,15 +18,18 @@ import {
   Obstacles,
 } from './components/gameBackground';
 import { setPause, setReady } from './state/engine/engineSlice';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import SignUp from './components/signup/signup';
 import Signin from './components/signin/signin';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { setUser } from './state/auth/authSlice';
 import Header from './components/header/header';
+import backgroundMusic from "./assets/audio/bgMusic.mp3";
 
 let count = 1;
+
+
 
 function Home() {
   const dispatch = useDispatch();
@@ -36,6 +39,14 @@ function Home() {
 
   const isLoading = useSelector((state) => state.engine.loadingScreen);
 
+  const bgMusic = useMemo(() => {
+    const audio = new Audio(backgroundMusic);
+    audio.loop = true;  // Enable looping
+    return audio;
+  }, []);
+
+  const navigate = useNavigate();
+
   // Move state update logic to useEffect
   useEffect(() => {
     console.log(count);
@@ -43,14 +54,22 @@ function Home() {
       count++;
       dispatch(setReady(false));
       dispatch(setPause(true));
+      navigate("/banana-game")
     }
-  }, [score, dispatch]); // Dependencies to trigger the effect when score changes
+
+    
+    bgMusic.play()  
+    
+    
+      
+
+  }, [score, dispatch, bgMusic ]); // Dependencies to trigger the effect when score changes
 
   return (
     <>
       {isLoading && <LoadingScreen />}
-      {isPause && <BananaGame />}
-      {<Header/>}
+      
+           
       <div className="App">
         {!isPlay && score === 0 && <KeyMessages />}
         {!isPause && <Bricks />}
@@ -103,10 +122,12 @@ function App() {
   console.log(user != null ? true : false);
   return (
     <BrowserRouter>
+    <Header/>
       <Routes>
         <Route path="/" element={(user != null) ? <Home /> : <Signin />} />
         {/* <Route path="/signin" element={<Signin />} /> */}
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/banana-game" element={<BananaGame />} />
         <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>
     </BrowserRouter>
