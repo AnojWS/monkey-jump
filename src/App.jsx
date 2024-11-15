@@ -122,7 +122,7 @@ function App() {
   console.log(user != null ? true : false);
   return (
     <BrowserRouter>
-    <Header/>
+    {(user != null) && <Header/>}
       <Routes>
         <Route path="/" element={(user != null) ? <Home /> : <Signin />} />
         {/* <Route path="/signin" element={<Signin />} /> */}

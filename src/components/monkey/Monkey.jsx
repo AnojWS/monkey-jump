@@ -15,7 +15,7 @@ import {
 } from "../../state/monkey/monkeySlice";
 import { setReady, setDie, setScore } from "../../state/engine/engineSlice";
 
-// die
+
 import dieAudio from "../../assets/audio/mario-died.mp3";
 
 export const Mario = () => {
@@ -82,6 +82,7 @@ export const Mario = () => {
       mario_top + mario_height > obs1_top
     ) {
       dispatch(setDie(true));
+      
       marioDie.play();
       dispatch(setReady(false));
       setTimeout(() => {
