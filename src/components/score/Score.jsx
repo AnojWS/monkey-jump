@@ -5,6 +5,7 @@ import "./Score.css";
 
 export const Score = () => {
   const score = useSelector(state => state.engine.score);
+  const count = useSelector(state => state.engine.level);
   const lastScore = useSelector(state => state.engine.lastScore);
   const play = useSelector(state => state.engine.play);
   const die = useSelector(state => state.engine.die);
@@ -21,9 +22,11 @@ export const Score = () => {
     }
   }, [dispatch, play, score, lastScore, die]);
   return (
-    <div className="score-container">
+    <div className=" flex justify-between score-container">
       {play && <p className="score text-black">Score: {score}</p>}
+      {play && <p className="score text-right text-black">Level: {count}</p>}
       {!play && <p className="score text-black">Score: {lastScore}</p>}
+      {!play && <p className="score text-right text-black">Level: {count}</p>}
     </div>
   )
 }

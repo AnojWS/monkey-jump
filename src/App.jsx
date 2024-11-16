@@ -18,19 +18,16 @@ import {
   Obstacles,
 } from './components/gameBackground';
 import { setPause, setReady } from './state/engine/engineSlice';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState} from 'react';
 import SignUp from './components/signup/signup';
 import Signin from './components/signin/signin';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { setUser } from './state/auth/authSlice';
 import Header from './components/header/header';
-import backgroundMusic from "./assets/audio/bgMusic.mp3";
-import Leaderboard from './components/leaderBoard/leaderboard';
 
-let count = 1;
-
-
+import { setLevel } from './state/engine/engineSlice';
+import Leaderboard from './components/leaderBoard/leaderBoard';
 
 function Home() {
   const dispatch = useDispatch();
@@ -40,31 +37,18 @@ function Home() {
 
   const isLoading = useSelector((state) => state.engine.loadingScreen);
 
-  const bgMusic = useMemo(() => {
-    const audio = new Audio(backgroundMusic);
-    audio.loop = true;  // Enable looping
-    return audio;
-  }, []);
-
-  const navigate = useNavigate();
+  const count = useSelector((state) => state.engine.level);
 
   // Move state update logic to useEffect
   useEffect(() => {
     console.log(count);
-    if (score > 100 * count) {
-      count++;
+    if (score > 100 * count) {     
+      dispatch(setLevel());
       dispatch(setReady(false));
       dispatch(setPause(true));
-      // navigate("/banana-game")
     }
 
-
-    // bgMusic.play()  
-
-
-
-
-  }, [score, dispatch, bgMusic]); // Dependencies to trigger the effect when score changes
+  }, [score, dispatch]); // Dependencies to trigger the effect when score changes
 
   return (
     <>

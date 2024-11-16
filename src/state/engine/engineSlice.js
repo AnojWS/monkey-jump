@@ -7,6 +7,7 @@ const initialState = {
   speed: 0,
   score: 0,
   lastScore: 0,
+  level: 1,
   loadingScreen: true,
 };
 
@@ -35,6 +36,9 @@ export const engineSlice = createSlice({
     setLoadingScreen: (state, action) => {
       state.loadingScreen = action.payload;
     },
+    setLevel: (state) => {
+      state.level++;
+    },
   },
 });
 
@@ -46,5 +50,6 @@ export const {
   setScore,
   setLastScore,
   setLoadingScreen,
+  setLevel,
 } = engineSlice.actions;
 export default engineSlice.reducer;
